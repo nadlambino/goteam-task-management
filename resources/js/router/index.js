@@ -12,15 +12,19 @@ const routes = [
         }
     },
     {
-        name: 'task',
-        path: '/task',
-        component: () => import('./../pages/Dashboard.vue'),
+        name: 'tasks',
+        path: '/tasks',
+        component: () => import('./../pages/Tasks.vue'),
         meta: {
-            title: 'Task',
+            title: 'Tasks',
             requiresAuth: true
         }
     },
-    
+    {
+        name: 'not-found',
+        path: '/:pathMatch(.*)*',
+        component: () => import('./../pages/NotFound.vue'),
+    },
 ];
 
 const router = createRouter({
@@ -30,9 +34,12 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const auth = useAuth();
+    document.title = to.meta.title || document.title
 
     if (to.matched.some((route) => route.meta.requiresAuth)) {
-        return auth.getUser().then(() => next());
+        return auth.getUser().then(() => next()).catch(() => {
+            window.location.href = '/login'
+        });
     }
     
     next();
