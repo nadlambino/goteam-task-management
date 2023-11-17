@@ -1,11 +1,11 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import authMiddleware from '../middlewares/authMiddleware';
+import authMiddleware from '@/middlewares/authMiddleware';
 
 const routes = [
     {
         name: 'dashboard',
         path: '/',
-        component: () => import('./../pages/Dashboard.vue'),
+        component: () => import('@/pages/Dashboard.vue'),
         meta: {
             title: 'Dashboard',
             requiresAuth: true
@@ -14,7 +14,7 @@ const routes = [
     {
         name: 'tasks',
         path: '/tasks',
-        component: () => import('./../pages/Tasks.vue'),
+        component: () => import('@/pages/Tasks.vue'),
         meta: {
             title: 'Tasks',
             requiresAuth: true
@@ -23,7 +23,7 @@ const routes = [
     {
         path: '/tasks/create',
         name: 'tasks.create',
-        component: () => import('./../pages/TaskCreate.vue'),
+        component: () => import('@/pages/TaskCreate.vue'),
         meta: {
             title: 'Tasks - Create',
             requiresAuth: true
@@ -32,7 +32,7 @@ const routes = [
     {
         name: 'not-found',
         path: '/:pathMatch(.*)*',
-        component: () => import('./../pages/NotFound.vue'),
+        component: () => import('@/pages/NotFound.vue'),
     },
 ];
 

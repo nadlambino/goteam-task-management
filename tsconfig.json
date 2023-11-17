@@ -6,8 +6,12 @@
         "resources/**/*.vue"
     ],
     "compilerOptions": {
+        "baseUrl": "./",
         "allowJs": false,
-        "strict": false,
+        "strict": true,
+        "paths": {
+            "@/*": ["resources/js/*"]
+        }
     },
     "types": ["vite/client"], 
 }

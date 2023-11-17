@@ -2,7 +2,7 @@ import './bootstrap';
 import '../sass/app.scss';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import Router from './router';
+import Router from '@/router/index';
 
 const pinia = createPinia();
 const app = createApp({});
