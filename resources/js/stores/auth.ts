@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue';
-import type { User } from '../types';
+import type { User } from '@/declarations';
 
 export const useAuth = defineStore('auth', () => {
     const isAuthenticated = ref(false);

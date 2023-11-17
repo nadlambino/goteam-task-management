@@ -28,4 +28,7 @@ export default defineConfig({
             '@': '/resources/js',
         },
     },
+    optimizeDeps: {
+        exclude: ['@tanstack/vue-query']
+    }
 });
