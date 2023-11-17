@@ -26,3 +26,13 @@ export const TaskSchema = z.object({
 });
 
 export type Task = z.infer<typeof TaskSchema>;
+
+export type ApiSuccessResponse<T, U = {}> = {
+    data: T,
+    metadata: U
+}
+
+export type ApiErrorResponse = {
+    message: String,
+    errors: []
+}
