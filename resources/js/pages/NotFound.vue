@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import RouterLinkButton from '../components/RouterLinkButton.vue';
 
 </script>

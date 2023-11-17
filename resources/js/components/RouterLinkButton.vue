@@ -1,8 +1,10 @@
-<script setup>
-const props = defineProps({
+<script setup lang="ts">
+import type { RouteLocationRaw } from 'vue-router';
+
+const props = defineProps<{
     label: String,
-    to: String | Object
-})
+    to: RouteLocationRaw
+}>()
 </script>
 
 <template>

@@ -1,7 +1,11 @@
-<script setup>
+<script setup lang="ts">
 
 </script>
 
 <template>
-    Hello
+    <div class="content">
+        <form>
+            
+        </form>
+    </div>
 </template>
