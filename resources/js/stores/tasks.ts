@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { computed, type Ref } from 'vue';
+import { computed, watch, type Ref, watchEffect } from 'vue';
 import { useQuery } from '@tanstack/vue-query';
 import { TaskStatus, type ApiSuccessResponse, type Task } from '@/declarations';
 import { ref } from 'vue';
@@ -16,11 +16,17 @@ const tasksApiFetch = async (status: TaskStatus, page: Ref<number>): Promise<Api
 
 export const useTasks = defineStore('tasks', () => {
     const todoPage = ref(1);
-    const { data: todoResponse } = useQuery({
+    const todos = ref<Task[]>([]);
+    const { data: todoResponse, isFetched: isFetchedTodos } = useQuery({
         queryKey: ['todo-tasks', todoPage],
         queryFn: () => tasksApiFetch(TaskStatus.todo, todoPage),
     });
-    const todos = computed(() => todoResponse.value?.data || []);
+
+    watchEffect(() => {
+        if (!isFetchedTodos || !todoResponse.value?.data) return;
+
+        todos.value.push(...todoResponse.value?.data)
+    })
 
     const getNextPage = (type: TaskStatus) => {
         if (type === TaskStatus.todo) {
