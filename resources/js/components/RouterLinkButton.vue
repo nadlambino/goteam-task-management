@@ -11,6 +11,7 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .btn-link {
-    @apply bg-white border-blue-400 border-solid border px-4 py-2 no-underline rounded-md;
+    @apply bg-white border-blue-500 border-solid border px-4 py-2 no-underline rounded-md
+    hover:bg-blue-400 hover:text-white;
 }
 </style>

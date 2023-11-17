@@ -1,5 +1,5 @@
-import { createWebHistory, createRouter, useRouter } from 'vue-router'
-import { useAuth } from '../stores/auth';
+import { createWebHistory, createRouter } from 'vue-router'
+import authMiddleware from '../middlewares/authMiddleware';
 
 const routes = [
     {
@@ -21,6 +21,15 @@ const routes = [
         }
     },
     {
+        path: '/tasks/create',
+        name: 'tasks.create',
+        component: () => import('./../pages/TaskCreate.vue'),
+        meta: {
+            title: 'Tasks - Create',
+            requiresAuth: true
+        }
+    },
+    {
         name: 'not-found',
         path: '/:pathMatch(.*)*',
         component: () => import('./../pages/NotFound.vue'),
@@ -32,17 +41,6 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach((to, from, next) => {
-    const auth = useAuth();
-    document.title = to.meta.title || document.title
-
-    if (to.matched.some((route) => route.meta.requiresAuth)) {
-        return auth.getUser().then(() => next()).catch(() => {
-            window.location.href = '/login'
-        });
-    }
-    
-    next();
-});
+router.beforeEach(authMiddleware);
 
 export default router

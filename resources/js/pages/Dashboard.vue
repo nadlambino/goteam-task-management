@@ -1,9 +1,12 @@
 <script setup>
+import SubNavbar from '../components/SubNavbar.vue';
+import WelcomeUser from '../components/dashboard/WelcomeUser.vue';
 
 </script>
 
 <template>
-    <div>
-        <h1>Hello Admin</h1>
-    </div>
+    <SubNavbar />
+    <Suspense>
+        <WelcomeUser />
+    </Suspense>
 </template>
