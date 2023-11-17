@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes(['reset' => false]);
-
-Route::get('{any}', fn() => view('main'))->where('any', '.*');
+Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])
+    ->where('any', '.*');
