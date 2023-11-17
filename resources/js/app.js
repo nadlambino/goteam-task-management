@@ -1,10 +1,12 @@
 import './bootstrap';
+import '../sass/app.scss'
 import { createApp } from 'vue';
-import ExampleComponent from './components/ExampleComponent.vue';
-import App from './App.vue';
+import Router from './router'
+import Navbar from './components/Navbar.vue'
 
 const app = createApp({});
+app.use(Router)
 
-app.component('example-component', App);
+app.component('navbar', Navbar)
 
 app.mount('#app');
