@@ -6,7 +6,7 @@ const routes = [
         path: '/register',
         component: () => import('./../pages/Register.vue'),
         meta: {
-            title: `Register`
+            title: 'Register'
         }
     },
     {
@@ -14,9 +14,17 @@ const routes = [
         path: '/login',
         component: () => import('./../pages/Login.vue'),
         meta: {
-            title: `Login`
+            title: 'Login'
         }
     },
+    {
+        name: 'dashboard',
+        path: '/',
+        component: () => import('./../pages/Dashboard.vue'),
+        meta: {
+            title: 'Dashboard'
+        }
+    }
 ]
 
 const router = createRouter({

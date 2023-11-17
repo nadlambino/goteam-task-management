@@ -1,16 +1,20 @@
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export const useAuth = defineStore('auth', () => {
     const authenticated = ref(false);
     const user = ref();
     const router = useRouter();
+    const credentials = reactive({
+        email: null,
+        password: null
+    })
 
     const getUser = computed(() => authenticated && user ? user : null)
 
     const login = () => {
-        return axios.get('/api/user').then(({data})=>{
+        return axios.post('/login', credentials).then(({data})=>{
             user.value = data;
             authenticated.value = true;
             router.push({name:'dashboard'})
@@ -26,6 +30,7 @@ export const useAuth = defineStore('auth', () => {
     }
 
     return {
+        credentials,
         getUser,
         login,
         logout
