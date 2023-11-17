@@ -11,7 +11,10 @@
         "strict": true,
         "noImplicitAny": false,
         "paths": {
-            "@/*": ["resources/js/*"]
+            "@/*": [
+                "resources/js/*", 
+                "vue3-toastify/global"
+            ]
         }
     },
     "types": ["vite/client"], 

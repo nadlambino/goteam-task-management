@@ -2,15 +2,28 @@
 import { createZodPlugin } from '@formkit/zod';
 import { TaskSchema, TaskStatus, type Task } from '@/declarations';
 import { useMutation } from '@tanstack/vue-query'
+import { toast } from 'vue3-toastify';
+import { useRouter } from 'vue-router';
 
-const { isError, error, isSuccess, mutate } = useMutation({
-  mutationFn: (formData: Task) => window.axios.post('/api/tasks', formData),
+const router = useRouter();
+
+const { mutate, isPending } = useMutation({
+    mutationFn: (formData: Task) => window.axios.post('/api/tasks', formData),
+    onSuccess: handleSuccess,
+    onError: () => toast('Failed to create a task. Please try again.', { type: 'error' }),
 })
-
 
 const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) => {
-    mutate(formData)
+    mutate(formData);
 })
+
+function handleSuccess() {
+    toast('Successfully created a task.', { type: 'success' });
+    const redirectTimeout = setTimeout(() => {
+        router.push('/tasks');
+        clearInterval(redirectTimeout);
+    }, 1000);
+}
 </script>
 
 <template>
@@ -43,6 +56,7 @@ const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) 
                 <FormKit
                     type="submit"
                     label="Create"
+                    :disabled="isPending"
                 />
             </div>
         </FormKit>
