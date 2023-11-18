@@ -35,19 +35,15 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        try {
-            $data = $request->validated();
-            $data['due_at'] = Carbon::parse($data['due_at'])->format('Y-m-d H:i:s');
-            $task = Auth()->user()->tasks()->create($data);
+        $data = $request->validated();
+        $data['due_at'] = Carbon::parse($data['due_at'])->format('Y-m-d H:i:s');
+        $task = Auth()->user()->tasks()->create($data);
 
-            if ($task) {
-                return $this->successResponse($task->toArray(), code: 201);
-            }
-
-            return $this->errorResponse('Failed to create a task. Please try again.');
-        } catch(\Exception $e) {
-            return $this->errorResponse('Failed to create a task. Please try again.');
+        if ($task) {
+            return $this->successResponse($task->toArray(), code: 201);
         }
+
+        return $this->errorResponse('Failed to create a task. Please try again.');
     }
 
     /**
@@ -58,10 +54,13 @@ class TaskController extends Controller
         $task = Auth()
             ->user()
             ->tasks()
-            ->find($id)
-            ->toArray();
+            ->find($id);
 
-        return $this->successResponse($task);
+        if (!$task) {
+            return $this->errorResponse("Task with id of $id does not exists", code: 404);
+        }
+
+        return $this->successResponse($task->toArray());
     }
 
     /**
@@ -69,32 +68,34 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        try {
-            $data = $request->validated();
-            $data['due_at'] = Carbon::parse($data['due_at'])->format('Y-m-d H:i:s');
+        $data = $request->validated();
+        $data['due_at'] = Carbon::parse($data['due_at'])->format('Y-m-d H:i:s');
 
-            $data['started_at'] = match (true) {
-                !isset($data['started_at']) && $data['status'] !== 'Todo'   => now(),
-                $data['status'] === 'Todo'                                  => null,
-                !isset($data['started_at'])                                 => now(),
-                default                                                     => null
-            };
-            
-            $task->update($data);
+        $data['started_at'] = match (true) {
+            !isset($data['started_at']) && $data['status'] !== 'Todo'   => now(),
+            $data['status'] === 'Todo'                                  => null,
+            !isset($data['started_at'])                                 => now(),
+            default                                                     => null
+        };
+        
+        $task->update($data);
 
-            return $this->successResponse($task->toArray());
-        } catch (Exception) {
-            return $this->errorResponse('Failed to update a task. Please try again.');
-        }
+        return $this->successResponse($task->toArray());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy(string $id)
     {
+        $task = Auth::user()->tasks()->find($id);
+
+        if (!$task) {
+            return $this->errorResponse("Task with id of $id does not exists", code: 404);
+        }
+
         $task->delete();
 
-        $this->successResponse();
+        return $this->successResponse();
     }
 }
