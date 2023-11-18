@@ -43,7 +43,7 @@ const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) 
             </div>
             <div class="form-row">
                 <div class="form-label">
-                    <label>Status</label>
+                    <label>Status <span class="required">*</span></label>
                 </div>
                 <FormKit
                     type="radio"
@@ -54,7 +54,7 @@ const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) 
             </div>
             <div class="form-row">
                 <div class="form-label">
-                    <label>Due Date</label>
+                    <label>Due Date <span class="required">*</span></label>
                 </div>
                 <FormKit
                     type="date"
@@ -62,7 +62,7 @@ const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) 
                 />
             </div>
             <div class="form-action-container">
-                <button type="button">Discard</button>
+                <button type="button" class="form-btn cancel-btn">Cancel</button>
                 <FormKit
                     type="submit"
                     :label="type"
@@ -103,16 +103,27 @@ const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) 
 
     :deep(.formkit-input) {
         &:not([type=radio]) {
-            @apply w-full border border-solid rounded-[4px] border-gray-300 p-2 outline-blue-400;
+            @apply w-full border border-solid rounded-[4px] border-gray-300 p-2 outline-blue-400 text-gray-500;
+        }
+
+        &[type=radio] {
+            @apply appearance-none rounded-full p-[5px] border-4 border-solid border-gray-200 bg-gray-400;
+            &:checked {
+                @apply  border-blue-300 bg-blue-500;
+            }
         }
     }
 
     :deep(.formkit-options) {
-        @apply list-none p-0 flex gap-5;
+        @apply list-none p-0 flex gap-5 m-0;
 
         .formkit-option {
             .formkit-wrapper {
                 @apply flex gap-2 items-center;
+
+                .formkit-label {
+                    @apply text-gray-500;
+                }
 
                 .formkit-inner {
                     @apply relative top-[2px];
@@ -126,10 +137,18 @@ const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) 
     }
 
     .form-action-container {
-        @apply flex gap-5;
+        @apply flex gap-5 mt-2;
 
-        button, .formkit-outer {
-            @apply w-1/2;
+        .form-btn, .formkit-outer {
+            @apply w-1/2 rounded-md outline-none uppercase tracking-wide;
+        }
+
+        :deep(.formkit-input[type="submit"]) {
+            @apply bg-blue-500 border-2 border-blue-500 border-solid text-white uppercase tracking-wide hover:bg-blue-400 hover:border-blue-400;
+        }
+
+        .cancel-btn {
+            @apply border-2 border-solid border-blue-400 bg-white text-blue-500 hover:bg-gray-50;
         }
     }
 }
