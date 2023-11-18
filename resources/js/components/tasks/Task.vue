@@ -36,7 +36,7 @@ const handleDelete = () => {
                 <template #trigger>
                     <button class="delete-btn">&times;</button>
                 </template>
-                <p class="overflow-hidden">
+                <p class="overflow-hidden m-0">
                     Are you sure you want to delete <span class="delete-title">{{ task.title }}</span>?
                 </p>
             </n-popconfirm>
@@ -113,6 +113,6 @@ const handleDelete = () => {
 }
 
 :deep(.delete-title) {
-    @apply font-bold truncate block;
+    @apply font-bold;
 }
 </style>
