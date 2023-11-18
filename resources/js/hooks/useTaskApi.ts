@@ -21,7 +21,7 @@ export const fetchTaskById = async <T, U = {}>(id: number): Promise<ApiSuccessRe
 export const useTaskApi = (status: TaskStatus) => {
     const page = ref(1);
     const todos = ref<Task[]>([]);
-    const { data: apiResponse, isFetched: isFetchedTodos, isRefetching } = useQuery({
+    const { data: apiResponse, isFetched: isFetchedTodos } = useQuery({
         queryKey: ['tasks', `${status}-tasks`, page, status],
         queryFn: () => tasksApiFetch(status, page),
     });
