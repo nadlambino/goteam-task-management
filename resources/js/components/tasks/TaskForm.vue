@@ -15,7 +15,7 @@ const props = defineProps<{
 const { isPending } = toRefs(props);
 
 const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) => {
-    emits('submit', formData);
+    emits('submit', {...formData, id: props.task?.id});
 });
 
 const title = ref(props.task?.title);

@@ -37,7 +37,7 @@ const routes = [
             id: route.params.id
         }),
         meta: {
-            title: 'Tasks - Create',
+            title: 'Tasks - Edit',
             requiresAuth: true
         }
     },
