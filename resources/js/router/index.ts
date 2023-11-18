@@ -30,6 +30,15 @@ const routes = [
         }
     },
     {
+        path: '/tasks/:id',
+        name: 'tasks.id',
+        component: () => import('@/pages/TaskCreate.vue'),
+        meta: {
+            title: 'Tasks - Create',
+            requiresAuth: true
+        }
+    },
+    {
         name: 'not-found',
         path: '/:pathMatch(.*)*',
         component: () => import('@/pages/NotFound.vue'),
