@@ -14,3 +14,7 @@ html, body, #app {
 .navbar-brand {
     @apply font-extrabold text-blue-500 hover:text-blue-400;
 }
+
+.login-btn {
+    @apply w-full md:w-3/4;
+}

@@ -53,7 +53,9 @@ const handleEnd = () => {
     }
 
     .tasks-container {
-        @apply flex flex-col gap-3 h-[calc(100vh-190px)] overflow-y-scroll p-2;
+        @apply flex flex-col gap-3 h-auto overflow-y-scroll p-2;
+
+        @apply md:h-[calc(100vh-190px)];
 
         &::-webkit-scrollbar {
             display: none;

@@ -7,7 +7,7 @@ const user = await auth.getUser();
 
 <template>
     <h1 class="welcome">Hi, {{ user?.name }}</h1>
-    <h5 class="note">You can effortlessly view your current tasks and create new ones in a snap.</h5>
+    <h5 class="note">You can view your current tasks and create new ones in a snap.</h5>
 </template>
 
 <style scoped lang="scss">

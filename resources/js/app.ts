@@ -17,7 +17,7 @@ app.use(plugin, defaultConfig);
 app.use(VueQueryPlugin)
 
 app.use(Vue3Toastify, {
-  autoClose: 3000,
+  autoClose: 1000,
 } as ToastContainerOptions);
 
 app.mount('#app');
