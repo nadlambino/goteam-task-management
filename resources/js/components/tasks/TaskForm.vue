@@ -4,6 +4,7 @@ import { TaskSchema, TaskStatus, type Task } from '@/declarations';
 import { toRefs, ref } from 'vue';
 import { watchEffect } from 'vue';
 import moment from 'moment';
+import { useRouter } from 'vue-router';
 
 const emits = defineEmits(['submit']);
 const props = defineProps<{
@@ -30,6 +31,12 @@ watchEffect(() => {
     status.value = props.task.status;
     due.value = moment(props.task.due_at.toString()).format('YYYY-MM-DD');
 });
+
+const router = useRouter();
+
+const handleCancel = () => {
+    router.back();
+}
 
 </script>
 
@@ -84,7 +91,7 @@ watchEffect(() => {
                 />
             </div>
             <div class="form-action-container">
-                <button type="button" class="form-btn cancel-btn">Cancel</button>
+                <button type="button" class="form-btn cancel-btn" @click="handleCancel">Cancel</button>
                 <FormKit
                     type="submit"
                     :label="type"

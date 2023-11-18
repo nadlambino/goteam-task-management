@@ -13,6 +13,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.ts'])
 </head>
 <body>
+    <div id="modal"></div>
     <div id="app">
         @include('snippets.navbar')
         

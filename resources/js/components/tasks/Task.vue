@@ -3,6 +3,7 @@ import type { Task } from '@/declarations';
 import { computed } from 'vue';
 import moment from 'moment';
 import { useTaskApi } from '@/hooks/useTaskApi';
+import { NPopconfirm } from 'naive-ui'
 
 const props = defineProps<{
     task: Task
@@ -28,7 +29,17 @@ const handleDelete = () => {
                     {{ task.title }}
                 </router-link>
             </h4>
-            <button class="delete-btn" @click="handleDelete">&times;</button>
+            <n-popconfirm
+                @positive-click="handleDelete"
+                :width="300"
+            >
+                <template #trigger>
+                    <button class="delete-btn">&times;</button>
+                </template>
+                <p class="overflow-hidden">
+                    Are you sure you want to delete <span class="delete-title">{{ task.title }}</span>?
+                </p>
+            </n-popconfirm>
         </div>
         <div class="body">
             <p class="desc">{{ task.description }}</p>
@@ -78,7 +89,7 @@ const handleDelete = () => {
         }
 
         .delete-btn {
-            @apply border-none w-6 h-6 flex justify-center items-center rounded-full text-gray-700 bg-red-50 hover:bg-red-500 hover:text-white;
+            @apply flex-shrink-0 border-none w-6 h-6 flex justify-center items-center rounded-full text-gray-700 bg-red-50 hover:bg-red-500 hover:text-white;
         }
     }
 
@@ -99,5 +110,9 @@ const handleDelete = () => {
             }
         }
     }
+}
+
+:deep(.delete-title) {
+    @apply font-bold truncate block;
 }
 </style>
