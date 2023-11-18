@@ -2,15 +2,22 @@
 import type { Task } from '@/declarations';
 import { computed } from 'vue';
 import moment from 'moment';
+import { useTaskApi } from '@/hooks/useTaskApi';
 
 const props = defineProps<{
     task: Task
 }>();
 
+const taskApi = useTaskApi();
+
 const statusClass = computed(() => props.task.status.toLowerCase().replace(' ', '-'));
 const createdAt = computed(() => moment(props.task.created_at).format('MMM DD YYYY'));
 const startedAt = computed(() => props.task.started_at ? moment(props.task.started_at).format('MMM DD YYYY') : '-');
 const dueAt = computed(() => props.task.due_at ? moment(props.task.due_at).format('MMM DD YYYY') : '-');
+
+const handleDelete = () => {
+    taskApi.deleteTask(props.task.id as number);
+}
 </script>
 
 <template>
@@ -21,7 +28,7 @@ const dueAt = computed(() => props.task.due_at ? moment(props.task.due_at).forma
                     {{ task.title }}
                 </router-link>
             </h4>
-            <button class="delete-btn">&times;</button>
+            <button class="delete-btn" @click="handleDelete">&times;</button>
         </div>
         <div class="body">
             <p class="desc">{{ task.description }}</p>
