@@ -132,7 +132,7 @@ const handleCancel = () => {
 
     :deep(.formkit-input) {
         &:not([type=radio]) {
-            @apply w-full border border-solid rounded-[4px] border-gray-300 p-2 outline-blue-300 text-gray-500;
+            @apply w-full border border-solid rounded-[4px] border-gray-300 px-2 py-1 outline-blue-300 text-gray-500;
         }
 
         &[type=radio] {
@@ -173,15 +173,15 @@ const handleCancel = () => {
         @apply flex gap-5 mt-2;
 
         .form-btn, .formkit-outer {
-            @apply w-1/2 rounded-md outline-none uppercase tracking-wide;
+            @apply w-1/2 rounded-md outline-none capitalize tracking-wide;
         }
 
         :deep(.formkit-input[type="submit"]) {
-            @apply bg-blue-500 border-2 border-blue-500 border-solid text-white uppercase tracking-wide hover:bg-blue-400 hover:border-blue-400;
+            @apply bg-blue-500 border-2 border-blue-500 border-solid text-white capitalize tracking-wide hover:bg-blue-400 hover:border-blue-400;
         }
 
         .cancel-btn {
-            @apply border-2 border-solid border-blue-400 bg-white text-blue-500 hover:bg-gray-50;
+            @apply border border-solid border-blue-400 bg-white text-blue-500 hover:bg-gray-50;
         }
     }
 }

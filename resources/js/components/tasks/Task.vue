@@ -79,7 +79,7 @@ const handleDelete = () => {
     }
 
     .title-container {
-        @apply flex justify-between items-start;
+        @apply flex justify-between items-start gap-2;
         .title {
             @apply font-bold text-base truncate m-0;
 

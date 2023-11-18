@@ -6,7 +6,16 @@ const user = await auth.getUser();
 </script>
 
 <template>
-    <div>
-        <h1>Hello {{ user?.name }}</h1>
-    </div>
+    <h1 class="welcome">Hi, {{ user?.name }}</h1>
+    <h5 class="note">You can effortlessly view your current tasks and create new ones in a snap.</h5>
 </template>
+
+<style scoped lang="scss">
+.welcome {
+    @apply text-gray-700;
+}
+
+.note {
+    @apply text-gray-400;
+}
+</style>

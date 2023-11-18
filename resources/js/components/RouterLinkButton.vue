@@ -13,6 +13,6 @@ const props = defineProps<{
 
 <style scoped lang="scss">
 .btn-link {
-    @apply px-2 py-1 no-underline rounded-md bg-blue-500 border-2 border-blue-500 border-solid text-white uppercase tracking-wide hover:bg-blue-400 hover:border-blue-400;
+    @apply px-2 py-1 no-underline rounded-md bg-blue-500 border-2 border-blue-500 border-solid text-white capitalize tracking-wide hover:bg-blue-400 hover:border-blue-400;
 }
 </style>

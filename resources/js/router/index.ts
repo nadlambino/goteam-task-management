@@ -25,7 +25,7 @@ const routes = [
         name: 'tasks.create',
         component: () => import('@/pages/TaskCreate.vue'),
         meta: {
-            title: 'Tasks - Create',
+            title: 'Tasks | Create',
             requiresAuth: true
         }
     },
@@ -37,7 +37,7 @@ const routes = [
             id: route.params.id
         }),
         meta: {
-            title: 'Tasks - Edit',
+            title: 'Tasks | Edit',
             requiresAuth: true
         }
     },
@@ -45,6 +45,9 @@ const routes = [
         name: 'not-found',
         path: '/:pathMatch(.*)*',
         component: () => import('@/pages/NotFound.vue'),
+        meta: {
+            title: 'Page Not Found',
+        }
     },
 ];
 
