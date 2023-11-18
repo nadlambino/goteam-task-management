@@ -1,3 +1,11 @@
 @import url('https://fonts.bunny.net/css?family=Nunito');
 @import 'variables';
 @import 'bootstrap/scss/bootstrap';
+
+html, body, #app {
+    height: 100%;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

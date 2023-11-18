@@ -18,7 +18,7 @@ const tasks = useTasks();
 
 <style scoped lang="scss">
 .content {
-    @apply w-full flex flex-col gap-2;
+    @apply w-full flex flex-col h-full mt-2;
 
     @apply md:flex-row;
 }

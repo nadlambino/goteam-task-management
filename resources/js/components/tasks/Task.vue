@@ -61,7 +61,7 @@ const dueAt = computed(() => props.task.due_at ? moment(props.task.due_at).forma
         @apply font-bold text-base truncate m-0;
 
         a {
-            @apply text-gray-800 no-underline hover:underline;
+            @apply text-gray-700 no-underline hover:underline;
         }
     }
 
@@ -69,7 +69,7 @@ const dueAt = computed(() => props.task.due_at ? moment(props.task.due_at).forma
         @apply flex flex-col gap-2;
 
         .desc {
-            @apply m-0 text-sm;
+            @apply m-0 text-sm text-gray-800;
         }
 
         .details {
@@ -77,7 +77,7 @@ const dueAt = computed(() => props.task.due_at ? moment(props.task.due_at).forma
                 @apply flex justify-between;
 
                 small {
-                    @apply text-[10px];
+                    @apply text-[10px] text-gray-500;
                 }
             }
         }

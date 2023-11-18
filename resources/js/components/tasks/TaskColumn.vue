@@ -12,7 +12,7 @@ const props = defineProps<{
 
 <template>
     <div class="task-column">
-        <h3>{{ label }}</h3>
+        <h4 class="label">{{ label }}</h4>
         <div class="tasks-container">
             <Task v-for="task in tasks" :key="task.id" :task="task" />
             <button @click="getter">Get Next Page</button>
@@ -26,8 +26,16 @@ const props = defineProps<{
 
     @apply md:w-1/3;
 
+    .label {
+        @apply uppercase text-sm text-center bg-blue-500 text-white tracking-widest;
+    }
+
     .tasks-container {
-        @apply flex flex-col gap-3;
+        @apply flex flex-col gap-3 h-[calc(100vh-180px)] overflow-y-scroll p-2;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 }
 </style>
