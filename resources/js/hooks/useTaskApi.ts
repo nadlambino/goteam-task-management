@@ -8,8 +8,8 @@ type TaskListMetadata = {
     last_page: number
 }
 
-const tasksApiFetch = async (status: TaskStatus, page: Ref<number>): Promise<ApiSuccessResponse<Task[], TaskListMetadata>> => {
-    const { data } = await window.axios.get(`/api/tasks?status=${status}&page=${page.value}`);
+const tasksApiFetch = async (status: TaskStatus): Promise<ApiSuccessResponse<Task[], TaskListMetadata>> => {
+    const { data } = await window.axios.get(`/api/tasks?status=${status}`);
     return data;
 }
 
@@ -19,27 +19,18 @@ export const fetchTaskById = async <T, U = {}>(id: number): Promise<ApiSuccessRe
 }
 
 export const useTaskApi = (status: TaskStatus) => {
-    const page = ref(1);
     const todos = ref<Task[]>([]);
     const { data: apiResponse, isFetched: isFetchedTodos } = useQuery({
-        queryKey: ['tasks', `${status}-tasks`, page, status],
-        queryFn: () => tasksApiFetch(status, page),
+        queryKey: ['tasks', `${status}-tasks`, status],
+        queryFn: () => tasksApiFetch(status),
     });
 
     watchEffect(() => {
         if (!isFetchedTodos || !apiResponse.value?.data) return;
 
-        todos.value = [...todos.value, ...apiResponse.value?.data];
+        todos.value = apiResponse.value?.data;
     })
-
-    const getNextPage = () => {
-        if (page.value >= (apiResponse.value?.metadata?.last_page || 0)) return;
-
-        page.value = (apiResponse.value?.metadata?.current_page || 0) + 1
-    }
-
     return {
         todos,
-        getNextPage,
     }
 }

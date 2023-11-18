@@ -23,10 +23,10 @@ class TaskController extends Controller
             ->tasks()
             ->where('status', $status)
             ->orderByDesc('updated_at')
-            ->paginate(5)
+            ->get()
             ->toArray();
 
-        return $this->successResponse(Arr::get($tasks, 'data'), Arr::except($tasks, 'data'));
+        return $this->successResponse($tasks);
     }
 
     /**
@@ -71,6 +71,14 @@ class TaskController extends Controller
         try {
             $data = $request->validated();
             $data['due_at'] = Carbon::parse($data['due_at'])->format('Y-m-d H:i:s');
+
+            $data['started_at'] = match (true) {
+                !isset($data['started_at']) && $data['status'] !== 'Todo'   => now(),
+                $data['status'] === 'Todo'                                  => null,
+                !isset($data['started_at'])                                 => now(),
+                default                                                     => null
+            };
+            
             $task->update($data);
 
             return $this->successResponse($task->toArray());

@@ -1,22 +1,38 @@
 <script setup lang="ts">
 import { TaskStatus, type Task as TaskType } from '@/declarations';
 import Task from '@/components/tasks/Task.vue';
+import draggable from 'vuedraggable';
 
+const emits = defineEmits(['change', 'drop'])
 const props = defineProps<{
     label: TaskStatus,
-    tasks: TaskType[],
-    getter: () => void
+    tasks: TaskType[]
 }>();
+
+const handleChange = (log) => {
+    emits('change', log)
+}
+
+const handleEnd = (log) => {
+    emits('drop', props.label)
+}
 
 </script>
 
 <template>
     <div class="task-column">
         <h4 class="label">{{ label }}</h4>
-        <div class="tasks-container">
-            <Task v-for="task in tasks" :key="task.id" :task="task" />
-            <button @click="getter">Get Next Page</button>
-        </div>
+        <draggable 
+            class="tasks-container" 
+            :list="tasks" 
+            group="tasks"
+            @change="handleChange" 
+            @drop="handleEnd"
+            :item-key="label">
+            <template #item="{ element: task } : { element: TaskType }">
+                <Task :task="task" :key="task.id" />
+            </template>
+        </draggable>
     </div>
 </template>
 

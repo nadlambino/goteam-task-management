@@ -1,18 +1,73 @@
 <script setup lang="ts">
 import SubNavbar from '@/components/SubNavbar.vue';
 import TaskColumn from '@/components/tasks/TaskColumn.vue';
-import { TaskStatus } from '@/declarations';
+import { TaskStatus, type Task } from '@/declarations';
 import { useTasks } from '@/stores/tasks';
+import { useMutation, useQueryClient } from '@tanstack/vue-query';
+import { watchEffect } from 'vue';
+import { ref } from 'vue';
+import { toast } from 'vue3-toastify';
 
 const tasks = useTasks();
+const task = ref<Task | undefined>();
+const status = ref<TaskStatus | undefined>();
+
+const handleChange = (log) => {
+    if (log?.added) {
+        task.value = log.added?.element
+    } else if (log?.moved) {
+        task.value = log.moved?.element
+    }
+}
+
+const handleDrop = (s) => {
+    status.value = s;
+}
+
+const queryClient = useQueryClient();
+const { mutate } = useMutation({
+    mutationFn: (formData: Task) => window.axios.put(`/api/tasks/${formData.id}`, formData),
+    onSuccess: handleSuccess,
+    onError: () => toast('Failed to update a task. Please try again.', { type: 'error' }),
+});
+
+function handleSuccess() {
+    toast('Successfully updated a task.', { type: 'success' });
+    queryClient.invalidateQueries({ queryKey: ['tasks'] });
+    task.value = undefined;
+    status.value = undefined;
+}
+
+watchEffect(() => {
+    if (!task.value || !status.value) return;
+
+    const formData = {...task.value};
+    formData.status = status.value;
+    mutate(formData);
+})
 </script>
 
 <template>
     <SubNavbar />
     <div class="content">
-        <TaskColumn :tasks="tasks.todos" :getter="tasks.getNextTodos" :label="TaskStatus.todo" />
-        <TaskColumn :tasks="tasks.inprogress" :getter="tasks.getNextInprogress" :label="TaskStatus.in_progress" />
-        <TaskColumn :tasks="tasks.done" :getter="tasks.getNextDone" :label="TaskStatus.done" />
+        <TaskColumn 
+            :tasks="tasks.todos" 
+            :label="TaskStatus.todo" 
+            @change="handleChange" 
+            @drop="handleDrop"
+        />
+        <TaskColumn 
+            :tasks="tasks.inprogress" 
+            :label="TaskStatus.in_progress" 
+            @change="handleChange" 
+            @drop="handleDrop"
+        />
+        <TaskColumn 
+            :tasks="tasks.done" 
+            :label="TaskStatus.done" 
+            @change="handleChange" 
+            @drop="handleDrop"
+        />
     </div>
 </template>
 
