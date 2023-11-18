@@ -10,3 +10,7 @@ html, body, #app {
         display: none;
     }
 }
+
+.navbar-brand {
+    @apply font-extrabold text-blue-500 hover:text-blue-400;
+}
