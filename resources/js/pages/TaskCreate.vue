@@ -23,5 +23,5 @@ function handleSuccess() {
 </script>
 
 <template>
-        <TaskForm @submit="mutate" type="Create" :is-pending="isPending" />
+    <TaskForm @submit="mutate" type="Create" :is-pending="isPending" />
 </template>

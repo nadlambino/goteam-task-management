@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 
 class TaskController extends Controller
 {
@@ -51,15 +53,29 @@ class TaskController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $task = Auth()
+            ->user()
+            ->tasks()
+            ->find($id)
+            ->toArray();
+
+        return $this->successResponse($task);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateTaskRequest $request, Task $task)
     {
-        //
+        try {
+            $data = $request->validated();
+            $data['due_at'] = Carbon::parse($data['due_at'])->format('Y-m-d H:i:s');
+            $task->update($data);
+
+            return $this->successResponse($task->toArray());
+        } catch (Exception) {
+            return $this->errorResponse('Failed to update a task. Please try again.');
+        }
     }
 
     /**

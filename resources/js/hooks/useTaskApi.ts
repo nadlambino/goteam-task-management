@@ -13,11 +13,16 @@ const tasksApiFetch = async (status: TaskStatus, page: Ref<number>): Promise<Api
     return data;
 }
 
+export const fetchTaskById = async <T, U = {}>(id: number): Promise<ApiSuccessResponse<T, U>> => {
+    const { data } = await window.axios.get(`/api/tasks/${id}`);
+    return data;
+}
+
 export const useTaskApi = (status: TaskStatus) => {
     const page = ref(1);
     const todos = ref<Task[]>([]);
-    const { data: apiResponse, isFetched: isFetchedTodos } = useQuery({
-        queryKey: [`${status}-tasks`, page, status],
+    const { data: apiResponse, isFetched: isFetchedTodos, isRefetching } = useQuery({
+        queryKey: ['tasks', `${status}-tasks`, page, status],
         queryFn: () => tasksApiFetch(status, page),
     });
 
@@ -35,6 +40,6 @@ export const useTaskApi = (status: TaskStatus) => {
 
     return {
         todos,
-        getNextPage
+        getNextPage,
     }
 }

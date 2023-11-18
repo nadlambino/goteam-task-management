@@ -1,18 +1,35 @@
 <script setup lang="ts">
 import { createZodPlugin } from '@formkit/zod';
 import { TaskSchema, TaskStatus, type Task } from '@/declarations';
-import { toRefs } from 'vue';
+import { toRefs, ref } from 'vue';
+import { watchEffect } from 'vue';
+import moment from 'moment';
 
 const emits = defineEmits(['submit']);
 const props = defineProps<{
     isPending: boolean,
-    type: 'Create' | 'Update'
+    type: 'Create' | 'Update',
+    task?: Task
 }>()
 const { isPending } = toRefs(props);
 
 const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) => {
     emits('submit', formData);
-})
+});
+
+const title = ref(props.task?.title);
+const description = ref(props.task?.description);
+const status = ref(props.task?.status);
+const due = ref(props.task?.due_at.toString());
+
+watchEffect(() => {
+    if (!props.task) return;
+
+    title.value = props.task.title;
+    description.value = props.task.description || '';
+    status.value = props.task.status;
+    due.value = moment(props.task.due_at.toString()).format('YYYY-MM-DD');
+});
 
 </script>
 
@@ -22,23 +39,26 @@ const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) 
             <div class="form-row">
                 <div class="form-label">
                     <label>Title <span class="required">*</span></label>
-                    <small>0/100</small>
+                    <small>{{ title?.length || 0 }}/100</small>
                 </div>
                 <FormKit
                     type="text"
                     name="title"
                     :max="100"
                     :min="3"
+                    v-model="title"
                 />
             </div>
             <div class="form-row">
                 <div class="form-label">
                     <label>Description</label>
-                    <small>0/1000</small>
+                    <small>{{ description?.length || 0 }}/1000</small>
                 </div>
                 <FormKit
                     type="textarea"
                     name="description"
+                    :max="1000"
+                    v-model="description"
                 />
             </div>
             <div class="form-row">
@@ -50,6 +70,7 @@ const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) 
                     name="status"
                     :value="TaskStatus.todo"
                     :options="Object.values(TaskStatus)"
+                    v-model="status"
                 />
             </div>
             <div class="form-row">
@@ -59,6 +80,7 @@ const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) 
                 <FormKit
                     type="date"
                     name="due_at"
+                    v-model="due"
                 />
             </div>
             <div class="form-action-container">
@@ -103,7 +125,7 @@ const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) 
 
     :deep(.formkit-input) {
         &:not([type=radio]) {
-            @apply w-full border border-solid rounded-[4px] border-gray-300 p-2 outline-blue-400 text-gray-500;
+            @apply w-full border border-solid rounded-[4px] border-gray-300 p-2 outline-blue-300 text-gray-500;
         }
 
         &[type=radio] {
@@ -111,6 +133,10 @@ const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) 
             &:checked {
                 @apply  border-blue-300 bg-blue-500;
             }
+        }
+
+        &[name=description] {
+            @apply h-[150px] resize-none;
         }
     }
 

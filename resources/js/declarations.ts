@@ -32,8 +32,7 @@ export const TaskSchema = z.object({
         .date({
             required_error: "Please input a due date",
             invalid_type_error: "Please input a valid due date"
-        })
-        .min(today, "Due date must be today or future date"),
+        }),
     status: z.nativeEnum(TaskStatus).default(TaskStatus.todo),
     created_at: z.coerce.date().optional(),
     updated_at: z.coerce.date().optional(),

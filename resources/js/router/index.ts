@@ -32,7 +32,10 @@ const routes = [
     {
         path: '/tasks/:id',
         name: 'tasks.id',
-        component: () => import('@/pages/TaskCreate.vue'),
+        component: () => import('@/pages/TaskEdit.vue'),
+        props: route => ({ 
+            id: route.params.id
+        }),
         meta: {
             title: 'Tasks - Create',
             requiresAuth: true
