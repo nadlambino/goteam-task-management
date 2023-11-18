@@ -15,11 +15,14 @@ const dueAt = computed(() => props.task.due_at ? moment(props.task.due_at).forma
 
 <template>
     <div class="task-container" :class="statusClass">
-        <h4 class="title" :title="task.title">
-            <router-link :to="`/tasks/${task.id}`">
-                {{ task.title }}
-            </router-link>
-        </h4>
+        <div class="title-container">
+            <h4 class="title" :title="task.title">
+                <router-link :to="`/tasks/${task.id}`">
+                    {{ task.title }}
+                </router-link>
+            </h4>
+            <button class="delete-btn">&times;</button>
+        </div>
         <div class="body">
             <p class="desc">{{ task.description }}</p>
             <div class="details">
@@ -56,12 +59,19 @@ const dueAt = computed(() => props.task.due_at ? moment(props.task.due_at).forma
     &.done {
         @apply border-t-green-500;
     }
-    
-    .title {
-        @apply font-bold text-base truncate m-0;
 
-        a {
-            @apply text-gray-700 no-underline hover:underline;
+    .title-container {
+        @apply flex justify-between items-start;
+        .title {
+            @apply font-bold text-base truncate m-0;
+
+            a {
+                @apply text-gray-700 no-underline hover:underline;
+            }
+        }
+
+        .delete-btn {
+            @apply border-none w-6 h-6 flex justify-center items-center rounded-full text-gray-700 bg-red-50 hover:bg-red-500 hover:text-white;
         }
     }
 

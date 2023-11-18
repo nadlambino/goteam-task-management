@@ -13,7 +13,7 @@ const handleChange = (log) => {
     emits('change', log)
 }
 
-const handleEnd = (log) => {
+const handleEnd = () => {
     emits('drop', props.label)
 }
 

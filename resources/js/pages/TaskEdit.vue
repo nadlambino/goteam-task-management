@@ -6,22 +6,25 @@ import TaskForm from '@/components/tasks/TaskForm.vue';
 import type { Task } from '@/declarations';
 import { ref } from 'vue';
 import { onBeforeMount } from 'vue';
-import { fetchTaskById } from '@/hooks/useTaskApi';
+import { useTaskApi } from '@/hooks/useTaskApi';
 
 const router = useRouter();
 const props = defineProps<{ id: number }>();
 
 const task = ref<Task | undefined>();
+const taskApi = useTaskApi();
 
 onBeforeMount(async () => {
-    const apiResponse = await fetchTaskById<Task>(props.id).catch(() => {
-        return router.back();
+    const apiResponse = await taskApi.fetchTaskById(props.id).catch(() => {
+        router.push('/tasks');
+        return;
     });
+
     if (!apiResponse?.data) {
-        return router.back();
+        return router.push('/tasks');
     }
 
-    task.value = apiResponse.data;
+    task.value = apiResponse?.data;
 })
 
 const queryClient = useQueryClient();

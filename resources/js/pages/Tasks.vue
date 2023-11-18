@@ -20,8 +20,8 @@ const handleChange = (log) => {
     }
 }
 
-const handleDrop = (s) => {
-    status.value = s;
+const handleDrop = (newStatus) => {
+    status.value = newStatus;
 }
 
 const queryClient = useQueryClient();
@@ -51,19 +51,19 @@ watchEffect(() => {
     <SubNavbar />
     <div class="content">
         <TaskColumn 
-            :tasks="tasks.todos" 
+            :tasks="(tasks.todos as Task[])" 
             :label="TaskStatus.todo" 
             @change="handleChange" 
             @drop="handleDrop"
         />
         <TaskColumn 
-            :tasks="tasks.inprogress" 
+            :tasks="(tasks.inprogress as Task[])" 
             :label="TaskStatus.in_progress" 
             @change="handleChange" 
             @drop="handleDrop"
         />
         <TaskColumn 
-            :tasks="tasks.done" 
+            :tasks="(tasks.done as Task[])" 
             :label="TaskStatus.done" 
             @change="handleChange" 
             @drop="handleDrop"

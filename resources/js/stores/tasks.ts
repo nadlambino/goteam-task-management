@@ -1,26 +1,38 @@
-import { TaskStatus } from "@/declarations";
+import { TaskStatus, type Task } from "@/declarations";
 import { useTaskApi } from "@/hooks/useTaskApi";
+import { useQuery } from "@tanstack/vue-query";
 import { defineStore } from "pinia";
 
 export const useTasks = defineStore('tasks', () => {
-    const todosApi = useTaskApi(TaskStatus.todo);
-    const todos = todosApi.todos;
-    const getNextTodos = todosApi.getNextPage;
+    const taskApi = useTaskApi();
 
-    const inprogressApi = useTaskApi(TaskStatus.in_progress);
-    const inprogress = inprogressApi.todos;
-    const getNextInprogress = inprogressApi.getNextPage;
-    
-    const doneApi = useTaskApi(TaskStatus.done);
-    const done = doneApi.todos;
-    const getNextDone = doneApi.getNextPage;
+    const { data: todos } = useQuery<Task[]>({
+        queryKey: ['tasks', 'todo'],
+        queryFn: async () => {
+            const { data } = await taskApi.fetchTasks(TaskStatus.todo);
+            return data;
+        }
+    });
+
+    const { data: inprogress } = useQuery<Task[]>({
+        queryKey: ['tasks', 'inprogress'],
+        queryFn: async () => {
+            const { data } = await taskApi.fetchTasks(TaskStatus.in_progress);
+            return data;
+        }
+    });
+
+    const { data: done } = useQuery<Task[]>({
+        queryKey: ['tasks', 'done'],
+        queryFn: async () => {
+            const { data } = await taskApi.fetchTasks(TaskStatus.done);
+            return data;
+        }
+    });
 
     return {
         todos,
-        getNextTodos,
         inprogress,
-        getNextInprogress,
-        done,
-        getNextDone,
+        done
     }
 });
