@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { TaskStatus, type Task as TaskType } from '@/declarations';
 import Task from '@/components/tasks/Task.vue';
+import TaskSkeleton from '@/components/tasks/TaskSkeleton.vue';
 import draggable from 'vuedraggable';
 
 const emits = defineEmits(['change', 'drop'])
 const props = defineProps<{
     label: TaskStatus,
-    tasks: TaskType[]
+    tasks: TaskType[] | undefined,
+    isPending: boolean
 }>();
 
 const handleChange = (log) => {
@@ -22,7 +24,11 @@ const handleEnd = () => {
 <template>
     <div class="task-column">
         <h4 class="label">{{ label }}</h4>
+        <div v-if="isPending" class="tasks-container">
+            <TaskSkeleton />
+        </div>
         <draggable 
+            v-else
             class="tasks-container" 
             :list="tasks" 
             group="tasks"

@@ -32,26 +32,31 @@ watchEffect(() => {
     const formData = {...task.value};
     formData.status = status.value;
     taskApi.updateTask(formData);
-})
+    task.value = undefined;
+    status.value = undefined;
+});
 </script>
 
 <template>
     <SubNavbar />
     <div class="content">
         <TaskColumn 
-            :tasks="(tasks?.todos || [] as Task[])" 
+            :tasks="tasks?.todos" 
+            :is-pending="tasks.pendingTodos"
             :label="TaskStatus.todo" 
             @change="handleChange" 
             @drop="handleDrop"
         />
         <TaskColumn 
-            :tasks="(tasks?.inprogress || [] as Task[])" 
+            :tasks="tasks?.inprogress" 
+            :is-pending="tasks.pendingInprogress"
             :label="TaskStatus.in_progress" 
             @change="handleChange" 
             @drop="handleDrop"
         />
         <TaskColumn 
-            :tasks="(tasks?.done || [] as Task[])" 
+            :tasks="tasks?.done" 
+            :is-pending="tasks.pendingDone"
             :label="TaskStatus.done" 
             @change="handleChange" 
             @drop="handleDrop"

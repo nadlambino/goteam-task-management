@@ -6,7 +6,7 @@ import { defineStore } from "pinia";
 export const useTasks = defineStore('tasks', () => {
     const taskApi = useTaskApi();
 
-    const { data: todos } = useQuery<Task[]>({
+    const { data: todos, isPending: pendingTodos } = useQuery<Task[]>({
         queryKey: ['tasks', 'todo'],
         queryFn: async () => {
             const { data } = await taskApi.fetchTasks(TaskStatus.todo);
@@ -14,7 +14,7 @@ export const useTasks = defineStore('tasks', () => {
         }
     });
 
-    const { data: inprogress } = useQuery<Task[]>({
+    const { data: inprogress, isPending: pendingInprogress } = useQuery<Task[]>({
         queryKey: ['tasks', 'inprogress'],
         queryFn: async () => {
             const { data } = await taskApi.fetchTasks(TaskStatus.in_progress);
@@ -22,7 +22,7 @@ export const useTasks = defineStore('tasks', () => {
         }
     });
 
-    const { data: done } = useQuery<Task[]>({
+    const { data: done, isPending: pendingDone } = useQuery<Task[]>({
         queryKey: ['tasks', 'done'],
         queryFn: async () => {
             const { data } = await taskApi.fetchTasks(TaskStatus.done);
@@ -32,7 +32,10 @@ export const useTasks = defineStore('tasks', () => {
 
     return {
         todos,
+        pendingTodos,
         inprogress,
-        done
+        pendingInprogress,
+        done,
+        pendingDone
     }
 });
