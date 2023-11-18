@@ -22,6 +22,7 @@ class TaskController extends Controller
             ->user()
             ->tasks()
             ->where('status', $status)
+            ->orderBy('sort')
             ->orderByDesc('updated_at')
             ->get()
             ->toArray();

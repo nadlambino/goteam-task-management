@@ -28,7 +28,8 @@ class UpdateTaskRequest extends FormRequest
             'title'         => ['required', 'min:3', 'max:100'],
             'description'   => ['sometimes', 'max:1000'],
             'due_at'        => ['date'],
-            'status'        => ['required', 'in:Todo,In Progress,Done']
+            'status'        => ['required', 'in:Todo,In Progress,Done'],
+            'sort'          => ['numeric']
         ];
     }
 }
