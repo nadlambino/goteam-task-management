@@ -1,5 +1,5 @@
 import { TaskStatus, type Task } from "@/declarations";
-import { useTaskApi } from "@/hooks/useTaskApi";
+import { useTaskApi } from "@/hooks/task-api";
 import { useQuery } from "@tanstack/vue-query";
 import { defineStore } from "pinia";
 

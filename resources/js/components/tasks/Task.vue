@@ -2,7 +2,7 @@
 import type { Task } from '@/declarations';
 import { computed } from 'vue';
 import moment from 'moment';
-import { useTaskApi } from '@/hooks/useTaskApi';
+import { useTaskApi } from '@/hooks/task-api';
 import { NPopconfirm } from 'naive-ui'
 
 const props = defineProps<{

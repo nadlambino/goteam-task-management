@@ -4,7 +4,7 @@ import TaskForm from '@/components/tasks/TaskForm.vue';
 import type { Task } from '@/declarations';
 import { ref } from 'vue';
 import { onBeforeMount } from 'vue';
-import { useTaskApi } from '@/hooks/useTaskApi';
+import { useTaskApi } from '@/hooks/task-api';
 
 const router = useRouter();
 const props = defineProps<{ id: number }>();

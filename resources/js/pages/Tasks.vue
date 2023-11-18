@@ -5,7 +5,7 @@ import { TaskStatus, type Task } from '@/declarations';
 import { useTasks } from '@/stores/tasks';
 import { watchEffect } from 'vue';
 import { ref } from 'vue';
-import { useTaskApi } from '@/hooks/useTaskApi';
+import { useTaskApi } from '@/hooks/task-api';
 
 const tasks = useTasks();
 const task = ref<Task | undefined>();
