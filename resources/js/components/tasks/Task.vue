@@ -64,7 +64,7 @@ const handleDelete = () => {
 <style scoped lang="scss">
 .task-container {
     @apply border border-solid border-t-4 border-slate-400 p-3 rounded-md
-    flex flex-col gap-2;
+    flex flex-col gap-2 hover:cursor-move;
 
     &.todo {
         @apply border-t-blue-500;
