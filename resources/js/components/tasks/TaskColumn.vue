@@ -43,11 +43,11 @@ const handleEnd = (log) => {
     @apply md:w-1/3;
 
     .label {
-        @apply uppercase text-sm text-center bg-blue-500 text-white tracking-widest;
+        @apply uppercase text-sm text-center bg-blue-500 py-1 text-white shadow-lg;
     }
 
     .tasks-container {
-        @apply flex flex-col gap-3 h-[calc(100vh-180px)] overflow-y-scroll p-2;
+        @apply flex flex-col gap-3 h-[calc(100vh-190px)] overflow-y-scroll p-2;
 
         &::-webkit-scrollbar {
             display: none;

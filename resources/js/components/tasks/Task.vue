@@ -24,15 +24,15 @@ const dueAt = computed(() => props.task.due_at ? moment(props.task.due_at).forma
             <p class="desc">{{ task.description }}</p>
             <div class="details">
                 <div class="details-row">
-                    <small>Created At</small>
+                    <small>Created</small>
                     <small>{{ createdAt }}</small>
                 </div>
                 <div class="details-row">
-                    <small>Started At</small>
+                    <small>Started</small>
                     <small>{{ startedAt }}</small>
                 </div>
                 <div class="details-row">
-                    <small>Due At</small>
+                    <small>Due</small>
                     <small>{{ dueAt }}</small>
                 </div>
             </div>
@@ -69,7 +69,7 @@ const dueAt = computed(() => props.task.due_at ? moment(props.task.due_at).forma
         @apply flex flex-col gap-2;
 
         .desc {
-            @apply m-0 text-sm text-gray-800;
+            @apply m-0 text-sm text-gray-800 line-clamp-4;
         }
 
         .details {
