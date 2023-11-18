@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { TaskStatus, type Task } from '@/declarations';
+import { TaskStatus, type Task as TaskType } from '@/declarations';
+import Task from '@/components/tasks/Task.vue';
 
 const props = defineProps<{
     label: TaskStatus,
-    tasks: Task[],
+    tasks: TaskType[],
     getter: () => void
 }>();
 
@@ -13,7 +14,7 @@ const props = defineProps<{
     <div class="task-column">
         <h3>{{ label }}</h3>
         <div class="tasks-container">
-            <p v-for="task in tasks">{{ task.status }}</p>
+            <Task v-for="task in tasks" :key="task.id" :task="task" />
             <button @click="getter">Get Next Page</button>
         </div>
     </div>
@@ -24,5 +25,9 @@ const props = defineProps<{
     @apply w-full;
 
     @apply md:w-1/3;
+
+    .tasks-container {
+        @apply flex flex-col gap-3;
+    }
 }
 </style>

@@ -22,7 +22,11 @@ export const TaskSchema = z.object({
     title: z.string().min(3).max(100),
     description: z.string().max(1000).optional(),
     due_at: z.coerce.date().min(today, "Due date must be greater than or equal today"),
-    status: z.nativeEnum(TaskStatus).default(TaskStatus.todo)
+    status: z.nativeEnum(TaskStatus).default(TaskStatus.todo),
+    created_at: z.coerce.date().optional(),
+    updated_at: z.coerce.date().optional(),
+    started_at: z.coerce.date().optional(),
+    id: z.number().optional()
 });
 
 export type Task = z.infer<typeof TaskSchema>;
