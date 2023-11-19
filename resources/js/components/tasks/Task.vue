@@ -96,7 +96,7 @@ const handleDelete = () => {
         @apply flex flex-col gap-2;
 
         .desc {
-            @apply m-0 text-sm text-gray-800 line-clamp-4;
+            @apply m-0 text-sm text-gray-700 line-clamp-4;
         }
 
         .details {
