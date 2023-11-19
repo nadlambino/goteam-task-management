@@ -5,6 +5,7 @@ import RouterLinkButton from './RouterLinkButton.vue';
 
 <template>
     <nav>
+        <slot></slot>
         <router-link class="sub-menu-item" to="/">Dashboard</router-link>
         <router-link class="sub-menu-item" to="/tasks">Tasks</router-link>
         <RouterLinkButton to="/tasks/create" label="Create" />
@@ -13,7 +14,7 @@ import RouterLinkButton from './RouterLinkButton.vue';
 
 <style scoped lang="scss">
 nav {
-    @apply flex gap-7 justify-end items-center;
+    @apply flex gap-7 gap-y-2 justify-end items-center flex-wrap;
 
     .sub-menu-item {
         @apply no-underline text-gray-600;

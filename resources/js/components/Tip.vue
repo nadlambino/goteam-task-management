@@ -31,7 +31,7 @@ const hasSlot = !!slots?.default;
 
 <style scoped lang="scss">
 .tip-container {
-    @apply absolute top-[-35px];
+    @apply absolute top-0;
 
     .tip-btn {
         @apply bg-transparent border-none flex justify-center items-center

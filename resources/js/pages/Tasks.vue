@@ -8,6 +8,7 @@ import { watchEffect } from 'vue';
 import { ref } from 'vue';
 import { useTaskApi } from '@/hooks/task-api';
 import SortTip from '@/components/tasks/SortTip.vue';
+import Search from '@/components/tasks/Search.vue';
 
 const tasks = useTasks();
 const task = ref<Task | undefined>();
@@ -44,7 +45,9 @@ watchEffect(() => {
 </script>
 
 <template>
-    <SubNavbar />
+    <SubNavbar>
+        <Search />
+    </SubNavbar>
     <div class="content">
         <TaskColumn 
             :tasks="tasks?.todos" 
@@ -67,7 +70,7 @@ watchEffect(() => {
             @change="handleChange" 
             @drop="handleDrop"
         />
-        <Tip label="TIP">
+        <Tip label="TIP" class="tip">
             <SortTip />
         </Tip>
     </div>
@@ -78,5 +81,9 @@ watchEffect(() => {
     @apply w-full flex flex-col h-full mt-2 relative;
 
     @apply md:flex-row;
+
+    .tip {
+        @apply top-[-78px] md:top-[-35px];
+    }
 }
 </style>
