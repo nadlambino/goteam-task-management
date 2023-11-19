@@ -12,6 +12,12 @@ class TaskService
 
     /**
      * Get tasks of authenticated user
+     * When $search is provided, filter with title and body
+     * When $status is provided, filter with status (Todo, In Progress, Done)
+     * When $due is provided, filter due_at
+     * $due = today || past
+     * today = due_at is today
+     * past = due_at is previous date
      *
      * @param string|null $search
      * @param string $status
