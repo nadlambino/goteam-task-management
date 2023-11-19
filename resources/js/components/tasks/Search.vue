@@ -20,7 +20,7 @@ const taskStore = useTasksStore();
     @apply md:w-72 md:order-[0];
 
     .search-input {
-        @apply border-none outline-none m-0 w-full bg-transparent;
+        @apply border-none outline-none m-0 w-full bg-transparent text-gray-600;
     }
 
     .search-icon {
