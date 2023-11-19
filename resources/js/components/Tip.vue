@@ -14,12 +14,12 @@ const hasSlot = !!slots?.default;
 
 <template>
     <div class="tip-container">
-        <n-popover :width="300" trigger="click">
+        <n-popover :width="300" trigger="hover">
             <template #trigger>
-                <button class="tip-btn">
+                <span class="tip-icon-wrapper">
                     <BulbIcon class="bulb-icon" />
                     <span v-if="label">{{ label }}</span>
-                </button>
+                </span>
             </template>
             <div v-if="!hasSlot" class="large-text">
                 {{ content }}
@@ -33,8 +33,8 @@ const hasSlot = !!slots?.default;
 .tip-container {
     @apply absolute top-0;
 
-    .tip-btn {
-        @apply bg-transparent border-none flex justify-center items-center
+    .tip-icon-wrapper {
+        @apply bg-transparent border-none flex justify-center items-center cursor-pointer
         gap-1 uppercase text-[10px] font-bold text-yellow-500 hover:text-yellow-400;
 
         span {

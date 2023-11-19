@@ -9,6 +9,7 @@ import { ref } from 'vue';
 import { useTaskApi } from '@/hooks/task-api';
 import SortTip from '@/components/tasks/SortTip.vue';
 import Search from '@/components/tasks/Search.vue';
+import DragTip from '@/components/tasks/DragTip.vue';
 
 const tasksStore = useTasksStore();
 const task = ref<Task | undefined>();
@@ -72,6 +73,8 @@ watchEffect(() => {
         />
         <Tip label="TIP" class="tip">
             <SortTip />
+            <hr class="my-2" />
+            <DragTip />
         </Tip>
     </div>
 </template>
