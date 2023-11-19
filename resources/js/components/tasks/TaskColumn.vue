@@ -4,6 +4,7 @@ import TaskComponent from '@/components/tasks/Task.vue';
 import TaskSkeleton from '@/components/tasks/TaskSkeleton.vue';
 import TaskEmpty from '@/components/tasks/TaskEmpty.vue';
 import { TaskStatus, type Task } from '@/declarations';
+import { toRefs } from 'vue';
 
 const emits = defineEmits(['change', 'drop']);
 const props = defineProps<{
@@ -11,6 +12,8 @@ const props = defineProps<{
     tasks: Task[] | undefined,
     isPending: boolean
 }>();
+
+const { tasks } = toRefs(props);
 
 const handleChange = (log) => {
     emits('change', log);
