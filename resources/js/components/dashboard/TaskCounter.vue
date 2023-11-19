@@ -1,13 +1,23 @@
 <script setup lang="ts">
-import type { TaskStatus } from '@/declarations';
+import type { TaskStatus, Task, ApiSuccessResponse } from '@/declarations';
+import { ref } from 'vue';
+import { toRefs } from 'vue';
 import { computed } from 'vue';
 
 const props = defineProps<{
-    status: TaskStatus,
-    count: number
+    status: TaskStatus | 'Due Today' | 'Past Due',
+    apiRequest: Promise<ApiSuccessResponse<Task[]>>
 }>();
 
+const { apiRequest } = toRefs(props);
 const statusClass = computed(() => props.status.toLowerCase().replace(' ', '-'));
+const count = ref(0);
+const tasks = ref<Task[]>([]);
+
+await apiRequest.value.then(r => {
+    count.value = r.data.length;
+    tasks.value = r.data;
+})
 </script>
 
 <template>
@@ -45,12 +55,28 @@ const statusClass = computed(() => props.status.toLowerCase().replace(' ', '-'))
         }
     }
 
+    &.due-today {
+        @apply text-orange-500 border-orange-500;
+        
+        .status {
+            @apply text-orange-500;
+        }
+    }
+
+    &.past-due {
+        @apply text-red-600 border-red-600;
+        
+        .status {
+            @apply text-red-600;
+        }
+    }
+
     .counter {
-        @apply m-0 font-bold font-['courier'];
+        @apply m-0 font-bold;
     }
 
     .status {
-        @apply m-0 text-gray-600 font-['courier'];
+        @apply m-0 text-gray-600;
     }
 }
 </style>

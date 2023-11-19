@@ -21,11 +21,28 @@ class TaskController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $status = $request->get('status', 'Todo');
+        $status = $request->get('status');
+        $due = $request->get('due');
+
         $tasks = Auth()
             ->user()
             ->tasks()
-            ->where('status', $status)
+            ->when(!empty($status), function($query) use ($status) {
+                $query->where('status', $status);
+            })
+            ->when(!empty($due), function($query) use ($due) {
+                if ($due === 'today') {
+                    return $query->whereBetween('due_at', [
+                        Carbon::today()->startOfDay(),
+                        Carbon::today()->endOfDay()
+                    ])
+                    ->where('status', '!=', 'Done');
+                }
+                if ($due === 'past') {
+                    return $query->where('due_at', '<', Carbon::today())
+                    ->where('status', '!=', 'Done');
+                }
+            })
             ->orderBy('sort')
             ->orderByDesc('updated_at')
             ->get()

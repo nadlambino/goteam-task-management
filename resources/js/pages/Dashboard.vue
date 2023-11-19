@@ -2,10 +2,16 @@
 import SubNavbar from '@/components/SubNavbar.vue';
 import WelcomeUser from '@/components/dashboard/WelcomeUser.vue';
 import TaskCounter from '@/components/dashboard/TaskCounter.vue';
+import TaskCounterSkeleton from '@/components/dashboard/TaskCounterSkeleton.vue';
 import { TaskStatus } from '@/declarations';
-import { useTasks } from '@/stores/tasks';
+import { useTaskApi } from '@/hooks/task-api';
 
-const tasks = useTasks();
+const taskApi = useTaskApi();
+const dueTodayResponse = taskApi.fetchTasks(undefined, 'today');
+const duePastResponse = taskApi.fetchTasks(undefined, 'past');
+const todoResponse = taskApi.fetchTasks(TaskStatus.todo);
+const inprogressResponse = taskApi.fetchTasks(TaskStatus.in_progress);
+const doneResponse = taskApi.fetchTasks(TaskStatus.done);
 </script>
 
 <template>
@@ -14,13 +20,38 @@ const tasks = useTasks();
         <WelcomeUser />
     </Suspense>
     <div class="task-counters">
-        <TaskCounter :status="TaskStatus.todo" :count="tasks.todos?.length || 0" />
-        <TaskCounter :status="TaskStatus.in_progress" :count="tasks.inprogress?.length || 0" />
+        <Suspense>
+            <TaskCounter status="Due Today" :api-request="dueTodayResponse" />
+            <template #fallback>
+                <TaskCounterSkeleton />
+            </template>
+        </Suspense>
+        <Suspense>
+            <TaskCounter status="Past Due" :api-request="duePastResponse" />
+            <template #fallback>
+                <TaskCounterSkeleton />
+            </template>
+        </Suspense>
     </div>
     <div class="task-counters">
-        <TaskCounter :status="TaskStatus.todo" :count="tasks.todos?.length || 0" />
-        <TaskCounter :status="TaskStatus.in_progress" :count="tasks.inprogress?.length || 0" />
-        <TaskCounter :status="TaskStatus.done" :count="tasks.done?.length || 0" />
+        <Suspense>
+            <TaskCounter :status="TaskStatus.todo" :api-request="todoResponse" />
+            <template #fallback>
+                <TaskCounterSkeleton />
+            </template>
+        </Suspense>
+        <Suspense>
+            <TaskCounter :status="TaskStatus.in_progress" :api-request="inprogressResponse" />
+            <template #fallback>
+                <TaskCounterSkeleton />
+            </template>
+        </Suspense>
+        <Suspense>
+            <TaskCounter :status="TaskStatus.done" :api-request="doneResponse" />
+            <template #fallback>
+                <TaskCounterSkeleton />
+            </template>
+        </Suspense>
     </div>
 </template>
 

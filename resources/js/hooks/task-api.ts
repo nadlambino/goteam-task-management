@@ -3,12 +3,24 @@ import { useMutation, useQueryClient } from '@tanstack/vue-query';
 import { useRouter } from 'vue-router';
 import { toast } from 'vue3-toastify';
 
+type Due = 'today' | 'past' | undefined;
+
 export const useTaskApi = () => {
     const queryClient = useQueryClient();
     const router = useRouter();
 
-    const fetchTasks = async (status: TaskStatus): Promise<ApiSuccessResponse<Task[]>> => {
-        const { data } = await window.axios.get(`/api/tasks?status=${status}`);
+    const fetchTasks = async (status: TaskStatus | undefined = undefined, due: Due = undefined): Promise<ApiSuccessResponse<Task[]>> => {
+        const params = {status, due};
+        const searchParams = new URLSearchParams();
+
+        for (const [key, value] of Object.entries(params)) {
+            if (value) {
+                searchParams.append(key, value);
+            }
+        }
+
+        const searchString = searchParams.toString();
+        const { data } = await window.axios.get(`/api/tasks?${searchString}`);
         return data;
     }
 
