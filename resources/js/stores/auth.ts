@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue';
 import type { User } from '@/declarations';
 
-export const useAuth = defineStore('auth', () => {
+export const useAuthStore = defineStore('auth', () => {
     const authUser = ref<User | undefined>();
 
     const getUser = async (): Promise<User | undefined> => {

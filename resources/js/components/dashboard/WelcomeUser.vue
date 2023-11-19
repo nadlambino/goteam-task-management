@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useAuth } from '@/stores/auth';
+import { useAuthStore } from '@/stores/auth';
 
-const auth = useAuth();
-const user = await auth.getUser();
+const authStore = useAuthStore();
+const user = await authStore.getUser();
 </script>
 
 <template>
