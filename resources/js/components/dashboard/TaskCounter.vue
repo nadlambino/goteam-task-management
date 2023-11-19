@@ -98,7 +98,7 @@ await apiRequest.value.then(r => {
     }
 
     .tasks {
-        @apply mt-5 mb-2 p-0 list-inside
+        @apply mt-5 mb-2 list-outside;
     }
 }
 </style>
