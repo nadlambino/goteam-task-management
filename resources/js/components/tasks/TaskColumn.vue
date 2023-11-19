@@ -57,7 +57,7 @@ const handleEnd = () => {
     }
 
     .tasks-container-empty {
-        @apply flex flex-col gap-3 h-auto overflow-hidden p-2 absolute w-full;
+        @apply flex flex-col gap-3 h-auto overflow-hidden p-2 w-full relative md:absolute;
     }
 
     .tasks-container {
