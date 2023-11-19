@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import type { User } from '@/declarations';
 
 export const useAuth = defineStore('auth', () => {
-    const isAuthenticated = ref(false);
     const authUser = ref<User | undefined>();
 
     const getUser = async (): Promise<User | undefined> => {
@@ -12,7 +11,6 @@ export const useAuth = defineStore('auth', () => {
         const response = await window.axios.get('/api/user');
         const user: User | undefined = await response?.data;
 
-        isAuthenticated.value = user !== undefined;
         authUser.value = user;
 
         return authUser.value;
@@ -20,6 +18,5 @@ export const useAuth = defineStore('auth', () => {
 
     return {
         getUser,
-        isAuthenticated
     }
 });
