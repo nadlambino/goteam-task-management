@@ -35,11 +35,15 @@ const hasSlot = !!slots?.default;
 
     .tip-btn {
         @apply bg-transparent border-none flex justify-center items-center
-        gap-1 uppercase text-gray-500 text-[10px] font-bold;
+        gap-1 uppercase text-[10px] font-bold text-yellow-500 hover:text-yellow-400;
+
+        span {
+            @apply text-gray-400 font-semibold;
+        }
     }
 
     .bulb-icon {
-        @apply text-yellow-400 w-5 h-5 relative top-[-2px];
+        @apply w-5 h-5 relative top-[-2px];
     }
 }
 </style>
