@@ -70,7 +70,7 @@ const handleDelete = () => {
     }
 
     &.in-progress {
-        @apply border-t-orange-500;
+        @apply border-t-yellow-500;
     }
 
     &.done {

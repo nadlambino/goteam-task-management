@@ -16,6 +16,10 @@ const tasks = useTasks();
     <div class="task-counters">
         <TaskCounter :status="TaskStatus.todo" :count="tasks.todos?.length || 0" />
         <TaskCounter :status="TaskStatus.in_progress" :count="tasks.inprogress?.length || 0" />
+    </div>
+    <div class="task-counters">
+        <TaskCounter :status="TaskStatus.todo" :count="tasks.todos?.length || 0" />
+        <TaskCounter :status="TaskStatus.in_progress" :count="tasks.inprogress?.length || 0" />
         <TaskCounter :status="TaskStatus.done" :count="tasks.done?.length || 0" />
     </div>
 </template>

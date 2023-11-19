@@ -30,10 +30,10 @@ const statusClass = computed(() => props.status.toLowerCase().replace(' ', '-'))
     }
 
     &.in-progress {
-        @apply text-orange-500 border-orange-500;
+        @apply text-yellow-500 border-yellow-500;
         
         .status {
-            @apply text-orange-500;
+            @apply text-yellow-500;
         }
     }
 
