@@ -13,23 +13,41 @@ const { apiRequest } = toRefs(props);
 const statusClass = computed(() => props.status.toLowerCase().replace(' ', '-'));
 const count = ref(0);
 const tasks = ref<Task[]>([]);
+const moreTaskCount = ref(0);
 
 await apiRequest.value.then(r => {
     count.value = r.data.length;
-    tasks.value = r.data;
-})
+    tasks.value = r.data.slice(0, 3);
+    moreTaskCount.value = r.data.length - 3;
+});
 </script>
 
 <template>
     <div class="task-counter" :class="statusClass">
         <h1 class="counter">{{ count.toLocaleString() }}</h1>
         <h4 class="status">{{ status }}</h4>
+
+        <ul class="tasks">
+            <li
+                v-for="task in tasks" 
+                :key="task.id">
+                <router-link 
+                    :to="`/tasks/${task.id}`">
+                    {{ task.title }}
+                </router-link>
+            </li>
+        </ul>
+        <router-link 
+            v-if="moreTaskCount > 0" 
+            to="/tasks">
+            and {{ moreTaskCount }}+ other task(s)
+        </router-link>
     </div>
 </template>
 
 <style lang="scss" scoped>
 .task-counter {
-    @apply border border-gray-500 border-t-4 border-solid w-full text-center rounded-md p-5;
+    @apply border border-gray-500 border-t-4 border-solid w-full rounded-md p-5;
     
     &.todo {
         @apply text-blue-500 border-blue-500;
@@ -72,11 +90,15 @@ await apiRequest.value.then(r => {
     }
 
     .counter {
-        @apply m-0 font-bold;
+        @apply m-0 font-bold text-center;
     }
 
     .status {
-        @apply m-0 text-gray-600;
+        @apply m-0 text-gray-600 text-center;
+    }
+
+    .tasks {
+        @apply mt-5 mb-2 p-0 list-inside
     }
 }
 </style>
