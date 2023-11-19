@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import SubNavbar from '@/components/SubNavbar.vue';
+import Tip from '@/components/Tip.vue';
 import TaskColumn from '@/components/tasks/TaskColumn.vue';
 import { TaskStatus, type Task } from '@/declarations';
 import { useTasks } from '@/stores/tasks';
 import { watchEffect } from 'vue';
 import { ref } from 'vue';
 import { useTaskApi } from '@/hooks/task-api';
+import SortTip from '@/components/tasks/SortTip.vue';
 
 const tasks = useTasks();
 const task = ref<Task | undefined>();
@@ -65,12 +67,15 @@ watchEffect(() => {
             @change="handleChange" 
             @drop="handleDrop"
         />
+        <Tip label="TIP">
+            <SortTip />
+        </Tip>
     </div>
 </template>
 
 <style scoped lang="scss">
 .content {
-    @apply w-full flex flex-col h-full mt-2;
+    @apply w-full flex flex-col h-full mt-2 relative;
 
     @apply md:flex-row;
 }
