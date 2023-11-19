@@ -15,10 +15,10 @@ const count = ref(0);
 const tasks = ref<Task[]>([]);
 const moreTaskCount = ref(0);
 
-await apiRequest.value.then(r => {
-    count.value = r.data.length;
-    tasks.value = r.data.slice(0, 3);
-    moreTaskCount.value = r.data.length - 3;
+await apiRequest.value.then(response => {
+    count.value = response.data.length;
+    tasks.value = response.data.slice(0, 3);
+    moreTaskCount.value = response.data.length - 3;
 });
 </script>
 
