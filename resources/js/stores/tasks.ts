@@ -5,7 +5,7 @@ import { defineStore } from "pinia";
 import { ref } from 'vue';
 import { refDebounced } from '@vueuse/core'
 
-export const useTasks = defineStore('tasks', () => {
+export const useTasksStore = defineStore('tasks', () => {
     const taskApi = useTaskApi();
     const searchKey = ref();
     const debouncedSearchKey = refDebounced(searchKey, 600)

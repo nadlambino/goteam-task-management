@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import SearchIcon from '@/components/icons/SearchIcon.vue';
-import { useTasks } from '@/stores/tasks';
+import { useTasksStore } from '@/stores/tasks';
 
-const taskStore = useTasks();
+const taskStore = useTasksStore();
 </script>
 
 <template>

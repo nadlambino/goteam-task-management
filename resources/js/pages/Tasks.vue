@@ -3,14 +3,14 @@ import SubNavbar from '@/components/SubNavbar.vue';
 import Tip from '@/components/Tip.vue';
 import TaskColumn from '@/components/tasks/TaskColumn.vue';
 import { TaskStatus, type Task } from '@/declarations';
-import { useTasks } from '@/stores/tasks';
+import { useTasksStore } from '@/stores/tasks';
 import { watchEffect } from 'vue';
 import { ref } from 'vue';
 import { useTaskApi } from '@/hooks/task-api';
 import SortTip from '@/components/tasks/SortTip.vue';
 import Search from '@/components/tasks/Search.vue';
 
-const tasks = useTasks();
+const tasksStore = useTasksStore();
 const task = ref<Task | undefined>();
 const status = ref<TaskStatus | undefined>();
 const taskApi = useTaskApi();
@@ -50,22 +50,22 @@ watchEffect(() => {
     </SubNavbar>
     <div class="content">
         <TaskColumn 
-            :tasks="tasks?.todos" 
-            :is-pending="tasks.pendingTodos"
+            :tasks="tasksStore?.todos" 
+            :is-pending="tasksStore.pendingTodos"
             :label="TaskStatus.todo" 
             @change="handleChange" 
             @drop="handleDrop"
         />
         <TaskColumn 
-            :tasks="tasks?.inprogress" 
-            :is-pending="tasks.pendingInprogress"
+            :tasks="tasksStore?.inprogress" 
+            :is-pending="tasksStore.pendingInprogress"
             :label="TaskStatus.in_progress" 
             @change="handleChange" 
             @drop="handleDrop"
         />
         <TaskColumn 
-            :tasks="tasks?.done" 
-            :is-pending="tasks.pendingDone"
+            :tasks="tasksStore?.done" 
+            :is-pending="tasksStore.pendingDone"
             :label="TaskStatus.done" 
             @change="handleChange" 
             @drop="handleDrop"
