@@ -4,6 +4,7 @@ import type { Task } from '@/declarations';
 import { computed } from 'vue';
 import { useTaskApi } from '@/hooks/task-api';
 import { NPopconfirm } from 'naive-ui';
+import DeleteIcon from '../icons/DeleteIcon.vue';
 
 const props = defineProps<{
     task: Task
@@ -33,7 +34,9 @@ const handleDelete = () => {
                 @positive-click="handleDelete"
                 :width="300">
                 <template #trigger>
-                    <button class="delete-btn">&times;</button>
+                    <button class="delete-btn">
+                        <DeleteIcon class="delete-icon" />
+                    </button>
                 </template>
                 <p class="overflow-hidden m-0">
                     Are you sure you want to delete <span class="delete-title">{{ task.title }}</span>?
@@ -88,7 +91,12 @@ const handleDelete = () => {
         }
 
         .delete-btn {
-            @apply flex-shrink-0 border-none w-6 h-6 flex justify-center items-center rounded-full text-gray-700 bg-red-50 hover:bg-red-500 hover:text-white;
+            @apply flex-shrink-0 border-none flex justify-center items-center bg-transparent
+            text-red-300 hover:text-red-500;
+
+            .delete-icon {
+                @apply w-4 h-4;
+            }
         }
     }
 
