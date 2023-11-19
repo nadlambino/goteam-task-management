@@ -21,12 +21,19 @@ class TaskController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
+        $search = $request->get('search');
         $status = $request->get('status');
         $due = $request->get('due');
 
         $tasks = Auth()
             ->user()
             ->tasks()
+            ->when(!empty($search), function($query) use ($search) {
+                $query->where(function($query) use ($search) {
+                    $query->where('title', 'LIKE', "%$search%")
+                        ->orWhere('description', 'LIKE', "%$search%");
+                });
+            })
             ->when(!empty($status), function($query) use ($status) {
                 $query->where('status', $status);
             })

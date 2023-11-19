@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import SearchIcon from '../icons/SearchIcon.vue';
+import SearchIcon from '@/components/icons/SearchIcon.vue';
+import { useTasks } from '@/stores/tasks';
 
+const taskStore = useTasks();
 </script>
 
 <template>
     <div class="search-container">
-        <input type="text" class="search-input">
+        <input v-model="taskStore.searchKey" type="text" class="search-input">
         <SearchIcon class="search-icon" />
     </div>
 </template>

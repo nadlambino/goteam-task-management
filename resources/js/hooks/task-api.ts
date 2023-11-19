@@ -9,13 +9,17 @@ export const useTaskApi = () => {
     const queryClient = useQueryClient();
     const router = useRouter();
 
-    const fetchTasks = async (status: TaskStatus | undefined = undefined, due: Due = undefined): Promise<ApiSuccessResponse<Task[]>> => {
-        const params = {status, due};
+    const fetchTasks = async (
+        status: TaskStatus | undefined = undefined, 
+        due: Due = undefined,
+        search: String | undefined = undefined
+    ): Promise<ApiSuccessResponse<Task[]>> => {
+        const params = {status, due, search};
         const searchParams = new URLSearchParams();
 
         for (const [key, value] of Object.entries(params)) {
-            if (value) {
-                searchParams.append(key, value);
+            if (value && value.trim().length > 0) {
+                searchParams.append(key, value as string);
             }
         }
 
