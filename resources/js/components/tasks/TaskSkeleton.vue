@@ -43,7 +43,7 @@
         }
 
         .delete-btn {
-            @apply flex-shrink-0 border-none w-6 h-6 flex justify-center items-center rounded-full text-gray-700 bg-gray-100;
+            @apply flex-shrink-0 border-none w-6 h-6 flex justify-center items-center rounded-full text-gray-700 bg-gray-100 cursor-wait;
         }
     }
 
