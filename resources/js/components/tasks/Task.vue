@@ -83,7 +83,7 @@ const handleDelete = () => {
             @apply font-bold text-base truncate m-0;
 
             a {
-                @apply text-gray-700 no-underline hover:underline;
+                @apply text-blue-600 no-underline hover:underline;
             }
         }
 
