@@ -1,10 +1,17 @@
 <script setup lang="ts">
+defineProps<{
+    failedRequest: boolean
+}>();
 
 </script>
 
 <template>
     <div class="task-empty">
-        <h3 class="title">You do not have a task here...</h3>
+        <template v-if="failedRequest">
+            <h3 class="title">It seems like there's a problem retrieving your tasks.</h3>
+            <h3 class="title mt-2">Please reload the page.</h3>
+        </template>
+        <h3 v-else class="title">You do not have a task here at the moment.</h3>
     </div>
 </template>
 

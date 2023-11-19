@@ -28,8 +28,8 @@ const handleEnd = () => {
 <template>
     <div class="task-column">
         <h4 class="label">{{ label }}</h4>
-        <div v-if="!isPending && tasks?.length === 0" class="tasks-container-empty">
-            <TaskEmpty />
+        <div v-if="!isPending && (tasks?.length === 0 || !tasks)" class="tasks-container-empty">
+            <TaskEmpty :failed-request="tasks === undefined" />
         </div>
         <div v-if="isPending" class="tasks-container">
             <TaskSkeleton />
