@@ -6,6 +6,7 @@ use App\Models\Task;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
@@ -13,9 +14,12 @@ use App\Http\Requests\UpdateTaskRequest;
 class TaskController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Get tasks of authenticated user
+     *
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $status = $request->get('status', 'Todo');
         $tasks = Auth()
@@ -31,9 +35,12 @@ class TaskController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store newly created task
+     *
+     * @param StoreTaskRequest $request
+     * @return JsonResponse
      */
-    public function store(StoreTaskRequest $request)
+    public function store(StoreTaskRequest $request): JsonResponse
     {
         $data = $request->validated();
         $data['due_at'] = Carbon::parse($data['due_at'])->format('Y-m-d H:i:s');
@@ -47,9 +54,12 @@ class TaskController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Get a specific task of authenticated user
+     *
+     * @param string $id
+     * @return JsonResponse
      */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
         $task = Auth()
             ->user()
@@ -64,9 +74,13 @@ class TaskController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a task
+     *
+     * @param UpdateTaskRequest $request
+     * @param Task $task
+     * @return JsonResponse
      */
-    public function update(UpdateTaskRequest $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task): JsonResponse
     {
         $data = $request->validated();
         $data['due_at'] = Carbon::parse($data['due_at'])->format('Y-m-d H:i:s');
@@ -84,9 +98,12 @@ class TaskController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete specific task of authenticated user
+     *
+     * @param string $id
+     * @return JsonResponse
      */
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
         $task = Auth::user()->tasks()->find($id);
 
