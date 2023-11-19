@@ -10,5 +10,17 @@ class Task extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title', 'description', 'status', 'sort', 'started_at', 'due_at'];
+    /**
+     * The attributes that are mass assignable
+     *
+     * @var array<string>
+     */
+    protected $fillable = [
+        'title', 
+        'description', 
+        'status', 
+        'sort', 
+        'started_at', 
+        'due_at'
+    ];
 }
