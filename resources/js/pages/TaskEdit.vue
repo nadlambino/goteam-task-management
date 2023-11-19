@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
 import TaskForm from '@/components/tasks/TaskForm.vue';
-import type { Task } from '@/declarations';
 import { ref } from 'vue';
 import { onBeforeMount } from 'vue';
+import { useRouter } from 'vue-router';
+import type { Task } from '@/declarations';
 import { useTaskApi } from '@/hooks/task-api';
 
 const router = useRouter();
@@ -23,9 +23,14 @@ onBeforeMount(async () => {
     }
 
     task.value = apiResponse?.data;
-})
+});
 </script>
 
 <template>
-    <TaskForm @submit="taskApi.updateTask" type="Update" :is-pending="taskApi.isUpdating.value" :task="task" />
+    <TaskForm 
+        @submit="taskApi.updateTask" 
+        type="Update" 
+        :is-pending="taskApi.isUpdating.value" 
+        :task="task" 
+    />
 </template>

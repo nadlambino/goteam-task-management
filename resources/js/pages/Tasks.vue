@@ -14,11 +14,15 @@ const taskApi = useTaskApi();
 
 const handleChange = (log) => {
     if (log?.added) {
-        const t = {...log.added?.element, sort: log?.added?.newIndex || 0}
-        task.value = t
+        task.value = {
+            ...log.added?.element, 
+            sort: log?.added?.newIndex || 0
+        };
     } else if (log?.moved) {
-        const t = {...log.moved?.element, sort: log?.moved?.newIndex || 0}
-        task.value = t
+        task.value = {
+            ...log.moved?.element, 
+            sort: log?.moved?.newIndex || 0
+        };
     }
 }
 

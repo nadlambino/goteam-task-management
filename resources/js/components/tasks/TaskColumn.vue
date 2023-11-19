@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { TaskStatus, type Task as TaskType } from '@/declarations';
-import Task from '@/components/tasks/Task.vue';
-import TaskSkeleton from '@/components/tasks/TaskSkeleton.vue';
 import draggable from 'vuedraggable';
+import TaskComponent from '@/components/tasks/Task.vue';
+import TaskSkeleton from '@/components/tasks/TaskSkeleton.vue';
+import { TaskStatus, type Task } from '@/declarations';
 
-const emits = defineEmits(['change', 'drop'])
+const emits = defineEmits(['change', 'drop']);
 const props = defineProps<{
     label: TaskStatus,
-    tasks: TaskType[] | undefined,
+    tasks: Task[] | undefined,
     isPending: boolean
 }>();
 
 const handleChange = (log) => {
-    emits('change', log)
+    emits('change', log);
 }
 
 const handleEnd = () => {
-    emits('drop', props.label)
+    emits('drop', props.label);
 }
 
 </script>
@@ -35,8 +35,8 @@ const handleEnd = () => {
             @change="handleChange" 
             @drop="handleEnd"
             :item-key="label">
-            <template #item="{ element: task } : { element: TaskType }">
-                <Task :task="task" :key="task.id" />
+            <template #item="{ element: task } : { element: Task }">
+                <TaskComponent :task="task" :key="task.id" />
             </template>
         </draggable>
     </div>

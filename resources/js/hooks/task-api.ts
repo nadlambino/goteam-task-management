@@ -4,6 +4,9 @@ import { useRouter } from 'vue-router';
 import { toast } from 'vue3-toastify';
 
 export const useTaskApi = () => {
+    const queryClient = useQueryClient();
+    const router = useRouter();
+
     const fetchTasks = async (status: TaskStatus): Promise<ApiSuccessResponse<Task[]>> => {
         const { data } = await window.axios.get(`/api/tasks?status=${status}`);
         return data;
@@ -13,9 +16,6 @@ export const useTaskApi = () => {
         const { data } = await window.axios.get(`/api/tasks/${id}`);
         return data;
     }
-
-    const queryClient = useQueryClient();
-    const router = useRouter();
 
     const { mutate: createTask, isPending: isCreating } = useMutation({
         mutationFn: (formData: Task) => window.axios.post('/api/tasks', formData),

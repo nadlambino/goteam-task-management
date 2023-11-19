@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter } from 'vue-router'
-import authMiddleware from '@/middlewares/authMiddleware';
+import authMiddleware from '@/middlewares/auth-middleware';
 
 const routes = [
     {

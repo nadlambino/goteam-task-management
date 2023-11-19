@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import moment from 'moment';
 import type { Task } from '@/declarations';
 import { computed } from 'vue';
-import moment from 'moment';
 import { useTaskApi } from '@/hooks/task-api';
-import { NPopconfirm } from 'naive-ui'
+import { NPopconfirm } from 'naive-ui';
 
 const props = defineProps<{
     task: Task
@@ -31,8 +31,7 @@ const handleDelete = () => {
             </h4>
             <n-popconfirm
                 @positive-click="handleDelete"
-                :width="300"
-            >
+                :width="300">
                 <template #trigger>
                     <button class="delete-btn">&times;</button>
                 </template>

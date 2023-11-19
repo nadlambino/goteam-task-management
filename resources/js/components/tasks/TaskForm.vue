@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import moment from 'moment';
 import { createZodPlugin } from '@formkit/zod';
 import { TaskSchema, TaskStatus, type Task } from '@/declarations';
 import { toRefs, ref } from 'vue';
 import { watchEffect } from 'vue';
-import moment from 'moment';
 import { useRouter } from 'vue-router';
 
 const emits = defineEmits(['submit']);
@@ -11,7 +11,7 @@ const props = defineProps<{
     isPending: boolean,
     type: 'Create' | 'Update',
     task?: Task
-}>()
+}>();
 const { isPending } = toRefs(props);
 
 const [zodPlugin, submitHandler] = createZodPlugin(TaskSchema, (formData: Task) => {
@@ -41,7 +41,7 @@ const handleCancel = () => {
 </script>
 
 <template>
-    <div class="content">
+    <div class="task-form-container">
         <FormKit type="form" @submit="submitHandler" :plugins="[zodPlugin]" :actions="false">
             <div class="form-row">
                 <div class="form-label">
@@ -103,7 +103,7 @@ const handleCancel = () => {
 </template>
 
 <style scoped lang="scss">
-.content {
+.task-form-container {
     @apply flex justify-center items-center;
 
     :deep(.formkit-form) {

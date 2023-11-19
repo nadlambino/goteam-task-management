@@ -4,7 +4,7 @@ import RouterLinkButton from '../components/RouterLinkButton.vue';
 </script>
 
 <template>
-    <div class="content">
+    <div class="not-found-container">
         <h1>Page Not Found</h1>
         <h5>The page that you are visiting might be broken or not available ☹️</h5>
         <RouterLinkButton to="/" label="Go back to dashboard" />
@@ -12,7 +12,7 @@ import RouterLinkButton from '../components/RouterLinkButton.vue';
 </template>
 
 <style lang="scss" scoped>
-.content {
+.not-found-container {
     h1 {
         @apply text-gray-600 m-0 leading-5 text-center;
     }

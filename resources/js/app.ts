@@ -14,7 +14,7 @@ const app = createApp({});
 app.use(pinia);
 app.use(Router);
 app.use(plugin, defaultConfig);
-app.use(VueQueryPlugin)
+app.use(VueQueryPlugin);
 
 app.use(Vue3Toastify, {
   autoClose: 1000,

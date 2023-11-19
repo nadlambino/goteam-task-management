@@ -1,5 +1,4 @@
 import 'bootstrap';
-
 import axios, { type AxiosStatic } from 'axios';
 
 declare global {

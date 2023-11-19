@@ -6,5 +6,9 @@ const taskApi = useTaskApi();
 </script>
 
 <template>
-    <TaskForm @submit="taskApi.createTask" type="Create" :is-pending="taskApi.isCreating.value" />
+    <TaskForm 
+        @submit="taskApi.createTask" 
+        type="Create" 
+        :is-pending="taskApi.isCreating.value" 
+    />
 </template>
